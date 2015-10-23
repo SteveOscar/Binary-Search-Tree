@@ -1,13 +1,19 @@
 require 'pry'
 class BinaryLinkTree
-  attr_reader :head
+  attr_reader :head, :left, :right
 
   def push(data)
     node = Node.new(data)
     if head.nil?
       @head = node
     else
-      head.push(node)
+      if head.data > data
+        node.left = true
+        binding.pry
+        head.push(node)
+      else
+        head.push(node)
+      end
     end
   end
 
@@ -21,13 +27,16 @@ class BinaryLinkTree
 end
 
 class Node
-  attr_accessor :data, :link, :spurious
+  attr_accessor :data, :link, :left, :right
 
   def initialize(data)
     @data = data
+    @left = left
+    @right = right
   end
 
   def push(node)
+    binding.pry
     if link.nil?
       @link = node
     else

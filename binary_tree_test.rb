@@ -10,29 +10,33 @@ class BinaryLinkTreeTest < Minitest::Test
   end
 
   def test_it_starts_with_zero_elements
+    skip
     assert_equal 0, list.count
   end
 
   def test_it_counts_first_element
+    skip
     list.push("one")
     assert_equal 1, list.count
   end
 
   def test_it_pushes_multiple_elemets
-    list.push("hello")
-    list.push("wod")
-    list.push("world")
-    list.push("worsd")
+    list.push(10)
+    list.push(7)
+    list.push(13)
+    list.push(6)
     assert_equal 4, list.count
   end
 
   def test_single_node_gets_a_tail
+    skip
     node = Node.new("Carl")
     node.push(node)
     assert node.link.nil? == false
   end
 
   def test_second_node_is_linked
+    skip
     node = Node.new("Carl")
     node.push(node)
     node2 = Node.new("Shake")
