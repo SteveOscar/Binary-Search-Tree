@@ -3,12 +3,13 @@ class BinaryLinkTree
   attr_reader :head, :left, :right
 
   def initialize
-    # @left = left
-    # @right = right
+    @count = 0
   end
 
   def insert(data)
     node = Node.new(data)
+    @count += 1
+    binding.pry
     if head.nil?
       @head = node
     else
@@ -17,11 +18,7 @@ class BinaryLinkTree
   end
 
   def count
-    if head
-      head.count
-    else
-      0
-    end
+    @count
   end
 end
 
@@ -47,7 +44,6 @@ class Node
 
 
   def push(previous, node)
-    #@before = previous
     current = node
     if previous.left.nil? && previous.right.nil?
       if previous.data > data
@@ -73,10 +69,6 @@ class Node
   end
 
   def count
-    if left
-      left.count + 1
-    else
-      1
-    end
+    @count
   end
 end

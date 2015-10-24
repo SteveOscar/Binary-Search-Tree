@@ -27,12 +27,6 @@ class BinaryLinkTreeTest < Minitest::Test
     assert_equal 4, list.count
   end
 
-  def test_single_node_gets_a_tail
-    node = Node.new("Carl")
-    node.push(node)
-    assert node.link.nil? == false
-  end
-
   def test_second_node_is_linked
     list.insert(10)
     list.insert(7)
