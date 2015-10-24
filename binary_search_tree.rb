@@ -2,18 +2,17 @@ require 'pry'
 class BinaryLinkTree
   attr_reader :head, :left, :right
 
-  def push(data)
+  def initialize
+    # @left = left
+    # @right = right
+  end
+
+  def insert(data)
     node = Node.new(data)
     if head.nil?
       @head = node
     else
-      if head.data > data
-        node.left = true
-        binding.pry
-        head.push(node)
-      else
-        head.push(node)
-      end
+      node.push(head, node)
     end
   end
 
@@ -26,39 +25,58 @@ class BinaryLinkTree
   end
 end
 
-class Node
-  attr_accessor :data, :link, :left, :right
 
-  def initialize(data)
+class Node
+  attr_accessor :data, :link, :left, :right, :bucket, :count
+
+  def initialize(data, left = nil, right = nil)
     @data = data
-    @left = left
-    @right = right
   end
 
-  def push(node)
-    binding.pry
-    if link.nil?
-      @link = node
-    else
-      link.push(node)
-    end
+  def link?
+    link
+  end
 
+  def left?
+    left
+  end
+
+  def right?
+    right
+  end
+
+
+  def push(previous, node)
+    #@before = previous
+    current = node
+    if previous.left.nil? && previous.right.nil?
+      if previous.data > data
+        previous.left = current
+
+      elsif previous.data < data
+        previous.right = current
+      end
+      target = node
+
+    else
+      target = previous.left if current.data < previous.data
+      target
+      until target.left.nil? && current.right.nil?
+        if target.left.nil?
+          target = target.right
+        else
+          target = target.left
+        end
+      end
+      current.push(target, node) unless target == node
+    end
   end
 
   def count
-    if link
-      link.count + 1
+    if left
+      left.count + 1
     else
       1
     end
   end
 end
-
-# numbers = (0..1000).to_a.sample(16)
-# list = BinaryLinkTree.new
-# numbers.each do |num|
-#   list.push(num)
-# end
-#
-# puts list.inspect
-# puts list.count
