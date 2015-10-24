@@ -1,3 +1,4 @@
+require 'pry'
 require 'minitest'
 require 'minitest/autorun'
 require './binary_search_tree'
@@ -18,19 +19,34 @@ class BinaryLinkTreeTest < Minitest::Test
     assert_equal 1, list.count
   end
 
-  def test_it_pushes_multiple_elemets
+  def test_it_counts_multiple_elemets
     list.insert(10)
     list.insert(7)
     list.insert(5)
     list.insert(3)
-    puts list
     assert_equal 4, list.count
   end
 
-  def test_second_node_is_linked
+  def test_second_node_is_linked_to_head
     list.insert(10)
     list.insert(7)
     refute list.head.left.nil?
+  end
+
+  def test_second_node_is_linked_to_third_node
+    list.insert(10)
+    list.insert(7)
+    list.insert(6)
+    refute list.head.left.left.nil?
+  end
+
+  def test_left_right_tree_pattern
+    list.insert(10)
+    list.insert(5)
+    list.insert(8)
+    list.insert(6)
+    list.insert(7)
+    refute list.head.left.right.left.nil?
   end
 
   def test_pop_off_element

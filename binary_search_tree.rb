@@ -9,7 +9,6 @@ class BinaryLinkTree
   def insert(data)
     node = Node.new(data)
     @count += 1
-    binding.pry
     if head.nil?
       @head = node
     else
@@ -56,6 +55,7 @@ class Node
 
     else
       target = previous.left if current.data < previous.data
+      target = previous.right if current.data > previous.data
       target
       until target.left.nil? && current.right.nil?
         if target.left.nil?
