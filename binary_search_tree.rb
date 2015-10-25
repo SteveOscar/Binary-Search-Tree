@@ -1,6 +1,6 @@
 require 'pry'
 class BinaryLinkTree
-  attr_reader :head
+  attr_reader :head, :count
 
   def initialize
     @count = 0
@@ -16,12 +16,7 @@ class BinaryLinkTree
       node.push(head, node)
     end
   end
-
-  def count
-    @count
-  end
 end
-
 
 class Node
   attr_accessor :data, :link, :left, :right, :found, :level, :max, :min
