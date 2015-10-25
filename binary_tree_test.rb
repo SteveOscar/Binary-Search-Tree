@@ -40,7 +40,7 @@ class BinaryLinkTreeTest < Minitest::Test
     refute list.head.left.left.nil?
   end
 
-  def test_left_right_tree_pattern
+  def test_alternating_tree_pattern
     list.insert(10)
     list.insert(5)
     list.insert(8)
@@ -57,6 +57,35 @@ class BinaryLinkTreeTest < Minitest::Test
     assert list.head.right.left.data == 8
   end
 
+  def test_left_branching_tree
+    list.insert(19)
+    list.insert(10)
+    list.insert(5)
+    list.insert(6)
+    assert list.head.left.left.right.data == 6
+  end
+
+  def test_right_branch_method
+    node = Node.new(7)
+    previous = Node.new(3)
+    result = node.check_right(previous, node)
+    assert previous.right == node
+  end
+
+  def test_left_branch_method
+    node = Node.new(3)
+    previous = Node.new(7)
+    result = node.check_left(previous, node)
+    assert previous.left == node
+  end
+
+  def test_include?
+    a = list.insert(3)
+    b = list.insert(1)
+    c = Node.new(3)
+    assert c.include?(a, c)
+  end
+
   def test_pop_off_element
     skip
     list.insert("hello")
@@ -65,6 +94,8 @@ class BinaryLinkTreeTest < Minitest::Test
     list.pop
     assert_equal 2, list.count
   end
+
+
 
   # Todo Pop, Delete
 

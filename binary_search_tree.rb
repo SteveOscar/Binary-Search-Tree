@@ -1,9 +1,10 @@
 require 'pry'
 class BinaryLinkTree
-  attr_reader :head, :left, :right
+  attr_reader :head, :left, :right, :values
 
   def initialize
     @count = 0
+    @values = []
   end
 
   def insert(data)
@@ -23,14 +24,19 @@ end
 
 
 class Node
-  attr_accessor :data, :link, :left, :right, :count, :direction
+  attr_accessor :data, :link, :left, :right, :count
 
   def initialize(data, left = nil, right = nil)
     @data = data
   end
 
-  def direction
-    @direction
+  def push(previous, node)
+    if include?(previous, node)
+    else
+      current = node
+      check_left(previous, current)
+      check_right(previous, current)
+    end
   end
 
   def check_left(previous, current)
@@ -55,14 +61,26 @@ class Node
     end
   end
 
-  def push(previous, node)
-    current = node
-
-    check_left(previous, current)
-    check_right(previous, current)
+  def include?(previous, node)
+    if previous.data == node.data
+      puts "Duplicate #{node.data} detected and discarded. Hit Enter to continue."
+            gets
+      true
+    else
+      false
+    end
   end
 
   def count
     @count
   end
 end
+
+tree = BinaryLinkTree.new
+tree.insert(10)
+tree.insert(5)
+tree.insert(7)
+tree.insert(15)
+tree.insert(5)
+tree.insert(10)
+tree.insert(15)
