@@ -115,13 +115,10 @@ class BinaryLinkTreeTest < Minitest::Test
     refute list.head.include?(list.head, "")
   end
 
-  def test_pop_off_element
-    skip
-    list.insert("hello")
-    list.insert("wod")
-    list.insert("world")
-    list.pop
-    assert_equal 2, list.count
+  def test_depth_of_head
+    list.insert(13)
+    head = list.head
+    assert_equal head.depth_of(list.head, 13), 1
   end
 
 

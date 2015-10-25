@@ -32,12 +32,13 @@ class Node
   end
 
   def push(previous, node)
-    # if include?(previous, node)
-    # else
+    if previous.data == node.data
+      puts "Duplicate #{node.data} detected and discarded"
+    else
       current = node
       check_left(previous, current)
       check_right(previous, current)
-    # end
+    end
   end
 
   def check_left(previous, current)
@@ -73,7 +74,15 @@ class Node
     @found
   end
 
-  def depth(previous, data)
+  def depth_of(node, value)
+    count = 1
+    if node.data == value
+      return count
+    else
+      depth_of(node.right, value) unless node.right.nil?
+      depth_of(node.left, value) unless node.left.nil?
+    end
+    count
   end
 
   def count
@@ -82,9 +91,10 @@ class Node
 end
 
 # tree = BinaryLinkTree.new
-# a = tree.insert(10)
-# b = tree.insert(7)
-# c = tree.insert(5)
-# d = tree.insert(9)
+# tree.insert(10)
+# tree.insert(7)
+# tree.insert(5)
+# tree.insert(5)
+# tree.insert(9)
 # binding.pry
 # tree.insert(5)
