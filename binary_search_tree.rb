@@ -23,49 +23,43 @@ end
 
 
 class Node
-  attr_accessor :data, :link, :left, :right, :bucket, :count
+  attr_accessor :data, :link, :left, :right, :count, :direction
 
   def initialize(data, left = nil, right = nil)
     @data = data
   end
 
-  def link?
-    link
+  def direction
+    @direction
   end
 
-  def left?
-    left
+  def check_left(previous, current)
+    if previous.data > data
+      if previous.left == nil
+        previous.left = current
+      else
+        target = previous.left
+        push(target, current)
+      end
+    end
   end
 
-  def right?
-    right
+  def check_right(previous, current)
+    if previous.data < data
+      if previous.right == nil
+        previous.right = current
+      else
+        target = previous.right
+        push(target, current)
+      end
+    end
   end
-
 
   def push(previous, node)
     current = node
-    if previous.left.nil? && previous.right.nil?
-      if previous.data > data
-        previous.left = current
 
-      elsif previous.data < data
-        previous.right = current
-      end
-      target = node
-
-    else
-      target = previous.left if current.data < previous.data
-      target = previous.right if current.data > previous.data
-      target
-      until target.left.nil? && current.right.nil?
-        if target.left.nil?
-          target = target.right
-        else
-          target = target.left
-        end
-      end
-      current.push(target, node) unless target == node
-    end
+    check_left(previous, current)
+    check_right(previous, current)
   end
 
   def count

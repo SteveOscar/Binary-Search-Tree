@@ -49,6 +49,14 @@ class BinaryLinkTreeTest < Minitest::Test
     refute list.head.left.right.left.nil?
   end
 
+  def test_right_branching_tree
+    list.insert(4)
+    list.insert(10)
+    list.insert(16)
+    list.insert(8)
+    assert list.head.right.left.data == 8
+  end
+
   def test_pop_off_element
     skip
     list.insert("hello")
