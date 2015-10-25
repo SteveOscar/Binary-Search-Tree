@@ -1,6 +1,6 @@
 require 'pry'
 class BinaryLinkTree
-  attr_reader :head, :left, :right, :values
+  attr_reader :head
 
   def initialize
     @count = 0
@@ -24,7 +24,7 @@ end
 
 
 class Node
-  attr_accessor :data, :link, :left, :right, :count, :found, :level
+  attr_accessor :data, :link, :left, :right, :found, :level, :max, :min
 
   def initialize(data, left = nil, right = nil)
     @data = data
@@ -86,9 +86,21 @@ class Node
     @depth
   end
 
-  def count
-    @count
+  def max(node)
+    until node.right.nil?
+      node = node.right
+    end
+    node.data
   end
+
+  def min(node)
+    until node.left.nil?
+      node = node.left
+    end
+    binding.pry
+    node.data
+  end
+
 end
 
 # tree = BinaryLinkTree.new

@@ -139,11 +139,45 @@ class BinaryLinkTreeTest < Minitest::Test
     assert_equal 3, tree.depth_of(list.head, 11)
   end
 
+  def test_depth_of_deeply_branched_node
+    list.insert(25)
+    list.insert(15)
+    list.insert(31)
+    list.insert(22)
+    list.insert(8)
+    list.insert(19)
+    list.insert(18)
+    list.insert(17)
+    list.insert(16)
+    tree = list.head
+    assert_equal 7, tree.depth_of(list.head, 16)
+  end
 
+  def test_max_value
+    list.insert(13)
+    list.insert(10)
+    list.insert(5)
+    list.insert(15)
+    list.insert(8)
+    list.insert(17)
+    list.insert(21)
+    list.insert(19)
+    root = list.head
+    assert root.max(root) == 21
+  end
 
-
-
-  # Todo Pop, Delete
-
+  def test_min_value
+    list.insert(13)
+    list.insert(10)
+    list.insert(5)
+    list.insert(15)
+    list.insert(8)
+    list.insert(17)
+    list.insert(21)
+    list.insert(19)
+    root = list.head
+    binding.pry
+    assert root.min(root) == 5
+  end
 
 end
