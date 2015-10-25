@@ -37,7 +37,7 @@ class BinaryLinkTreeTest < Minitest::Test
     list.insert(10)
     list.insert(7)
     list.insert(6)
-    refute list.head.left.left.nil?
+    assert list.head.left.left.data == 6
   end
 
   def test_alternating_tree_pattern
@@ -46,7 +46,7 @@ class BinaryLinkTreeTest < Minitest::Test
     list.insert(8)
     list.insert(6)
     list.insert(7)
-    refute list.head.left.right.left.nil?
+    assert list.head.left.right.left.data == 6
   end
 
   def test_right_branching_tree
@@ -79,11 +79,40 @@ class BinaryLinkTreeTest < Minitest::Test
     assert previous.left == node
   end
 
-  def test_include?
-    a = list.insert(3)
-    b = list.insert(1)
-    c = Node.new(3)
-    assert c.include?(a, c)
+  def test_head_include?
+    list.insert(13)
+    assert list.head.include?(list.head, 13)
+  end
+
+  def test_false_include?
+    list.insert(13)
+    list.insert(10)
+    list.insert(5)
+    list.insert(15)
+    refute list.head.include?(list.head, 2)
+  end
+
+  def test_after_split_branch_include?
+    list.insert(13)
+    list.insert(10)
+    list.insert(5)
+    list.insert(15)
+    list.insert(8)
+    assert list.head.include?(list.head, 8)
+  end
+
+  def test_string_include?
+    list.insert("car")
+    list.insert("truck")
+    list.insert("plane")
+    assert list.head.include?(list.head, "plane")
+  end
+
+  def test_blank_include?
+    list.insert("car")
+    list.insert("truck")
+    list.insert("plane")
+    refute list.head.include?(list.head, "")
   end
 
   def test_pop_off_element

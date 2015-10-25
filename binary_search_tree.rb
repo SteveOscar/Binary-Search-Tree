@@ -24,19 +24,20 @@ end
 
 
 class Node
-  attr_accessor :data, :link, :left, :right, :count
+  attr_accessor :data, :link, :left, :right, :count, :found
 
   def initialize(data, left = nil, right = nil)
     @data = data
+    @found = false
   end
 
   def push(previous, node)
-    if include?(previous, node)
-    else
+    # if include?(previous, node)
+    # else
       current = node
       check_left(previous, current)
       check_right(previous, current)
-    end
+    # end
   end
 
   def check_left(previous, current)
@@ -61,14 +62,18 @@ class Node
     end
   end
 
-  def include?(previous, node)
-    if previous.data == node.data
-      puts "Duplicate #{node.data} detected and discarded. Hit Enter to continue."
-            gets
-      true
-    else
-      false
+  def include?(node, value)
+    if node.data == value
+        @found = true
+        return @found
+      else
+      include?(node.right, value) unless node.right.nil?
+      include?(node.left, value) unless node.left.nil?
     end
+    @found
+  end
+
+  def depth(previous, data)
   end
 
   def count
@@ -76,11 +81,10 @@ class Node
   end
 end
 
-tree = BinaryLinkTree.new
-tree.insert(10)
-tree.insert(5)
-tree.insert(7)
-tree.insert(15)
-tree.insert(5)
-tree.insert(10)
-tree.insert(15)
+# tree = BinaryLinkTree.new
+# a = tree.insert(10)
+# b = tree.insert(7)
+# c = tree.insert(5)
+# d = tree.insert(9)
+# binding.pry
+# tree.insert(5)
