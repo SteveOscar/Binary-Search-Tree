@@ -117,9 +117,29 @@ class BinaryLinkTreeTest < Minitest::Test
 
   def test_depth_of_head
     list.insert(13)
-    head = list.head
-    assert_equal head.depth_of(list.head, 13), 1
+    tree = list.head
+    assert_equal 1, tree.depth_of(list.head, 13)
   end
+
+  def test_depth_of_second_node
+    list.insert(13)
+    list.insert(10)
+    tree = list.head
+    assert_equal 2, tree.depth_of(list.head, 10)
+  end
+
+  def test_depth_of_branched_node
+    list.insert(13)
+    list.insert(10)
+    list.insert(5)
+    list.insert(15)
+    list.insert(8)
+    list.insert(11)
+    tree = list.head
+    assert_equal 3, tree.depth_of(list.head, 11)
+  end
+
+
 
 
 

@@ -24,14 +24,16 @@ end
 
 
 class Node
-  attr_accessor :data, :link, :left, :right, :count, :found
+  attr_accessor :data, :link, :left, :right, :count, :found, :level
 
   def initialize(data, left = nil, right = nil)
     @data = data
     @found = false
+    @level = 1
   end
 
   def push(previous, node)
+    node.level += 1
     if previous.data == node.data
       puts "Duplicate #{node.data} detected and discarded"
     else
@@ -75,14 +77,13 @@ class Node
   end
 
   def depth_of(node, value)
-    count = 1
     if node.data == value
-      return count
-    else
+        @depth = node.level
+      else
       depth_of(node.right, value) unless node.right.nil?
       depth_of(node.left, value) unless node.left.nil?
     end
-    count
+    @depth
   end
 
   def count
