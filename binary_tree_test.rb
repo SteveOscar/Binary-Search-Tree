@@ -166,6 +166,19 @@ class BinaryLinkTreeTest < Minitest::Test
     assert root.max(root) == 21
   end
 
+  def test_max_value_equals_head
+    list.insert(100)
+    list.insert(90)
+    list.insert(80)
+    list.insert(85)
+    list.insert(10)
+    list.insert(5)
+    list.insert(99)
+    list.insert(45)
+    root = list.head
+    assert root.max(root) == 100
+  end
+
   def test_min_value
     list.insert(13)
     list.insert(10)
@@ -176,8 +189,20 @@ class BinaryLinkTreeTest < Minitest::Test
     list.insert(21)
     list.insert(19)
     root = list.head
-    binding.pry
     assert root.min(root) == 5
+  end
+
+  def test_min_value_equals_head
+    list.insert(1)
+    list.insert(90)
+    list.insert(80)
+    list.insert(85)
+    list.insert(10)
+    list.insert(5)
+    list.insert(99)
+    list.insert(45)
+    root = list.head
+    assert root.min(root) == 1
   end
 
 end

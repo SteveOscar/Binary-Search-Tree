@@ -97,7 +97,6 @@ class Node
     until node.left.nil?
       node = node.left
     end
-    binding.pry
     node.data
   end
 
