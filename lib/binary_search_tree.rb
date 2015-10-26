@@ -1,4 +1,3 @@
-require 'pry'
 class FileReader
   def read
     filename = ARGV[0]
@@ -24,11 +23,7 @@ class BinaryLinkTree
   def insert(data)
     node = Node.new(data)
     @count += 1
-    if head.nil?
-      @head = node
-    else
-      node.push(head, node)
-    end
+    head.nil? ? @head = node : node.push(head, node)
   end
 
   def import(data)
@@ -49,24 +44,20 @@ class Node
 
   def push(previous, node)
     node.level += 1
-    if previous.data == node.data || previous.data == ''
-      puts "Invalid entry: #{node.data} was discarded"
-    else
-      current = node
-      check_below(previous, current, previous.left, :>)
-      check_below(previous, current, previous.right, :<)
-    end
+    return if previous.data == node.data || previous.data == ''
+    current = node
+    check_below(previous, current, previous.left, :>)
+    check_below(previous, current, previous.right, :<)
   end
 
   def check_below(previous, current, direction, operator)
-    if previous.data.send(operator, data)
-      if direction == nil
-        previous.left = current if operator == :>
-        previous.right = current if operator == :<
-      else
-        target = direction
-        push(target, current)
-      end
+    return unless previous.data.send(operator, data)
+    if direction.nil?
+      previous.left = current if operator == :>
+      previous.right = current if operator == :<
+    else
+      target = direction
+      push(target, current)
     end
   end
 
@@ -102,10 +93,6 @@ class Node
     node.data
   end
 
-  def child?(node)
-    false ? node.left.nil? && node.right.nil? : true
-  end
-
   def tree_depth(node)
     unless node.left.nil? && node.right.nil?
       tree_depth(node.left) unless node.left.nil?
@@ -130,7 +117,6 @@ class Node
     handle.write(sorted.join(', '))
     puts "Just wrote a file #{sorted.length} chars long"
   end
-
 end
 
 if __FILE__ == $0
