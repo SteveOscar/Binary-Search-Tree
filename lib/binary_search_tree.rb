@@ -14,11 +14,10 @@ class FileWriter
 end
 
 class BinaryLinkTree
-  attr_reader :head, :count, :reader, :writer
+  attr_reader :head, :count, :reader
 
   def initialize
     @reader = FileReader.new
-    @writer = FileWriter.new
     @count = 0
   end
 
@@ -33,20 +32,16 @@ class BinaryLinkTree
   end
 
   def import (data)
-    reader.read.split("\n") .each { |num| data.insert(num) }
-  end
-
-  def write_file(handle)
-    handle.write(@values)
-    puts "Just wrote a file to #{@handle} that is #{@values} chars long"
+    reader.read.split("\n") .each { |num| data.insert(num.to_i) }
   end
 
 end
 
 class Node
-  attr_accessor :data, :left, :right, :level
+  attr_accessor :data, :left, :right, :level, :writer
 
   def initialize(data)
+    @writer = FileWriter.new
     @data = data
     @level = 1
     @max_depth = 0
@@ -139,14 +134,18 @@ class Node
     end
   end
 
+  def write_file(sorted)
+    handle = writer.output
+    handle.write(sorted.join(', '))
+    puts "Just wrote a file #{sorted.length} chars long"
+  end
+
 end
 
 if __FILE__ == $0
   list = BinaryLinkTree.new
   list.import(list)
   root = list.head
-  puts root.traverse_sort(root)
-  puts "#{list.count} is the count"
-  handle = list.writer.output
-  list.write_file(handle)
+  sorted = root.traverse_sort(root)
+  root.write_file(sorted)
 end
