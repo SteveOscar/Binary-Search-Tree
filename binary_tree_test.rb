@@ -225,4 +225,14 @@ class BinaryLinkTreeTest < Minitest::Test
     assert root.tree_depth(root) == 7
   end
 
+  def test_traversal_sort
+    list.insert(13)
+    list.insert(10)
+    list.insert(5)
+    list.insert(15)
+    list.insert(8)
+    root = list.head
+    assert_equal [5, 8, 10, 13, 15], root.traverse_sort(root)
+  end
+
 end

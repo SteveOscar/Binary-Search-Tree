@@ -4,7 +4,6 @@ class BinaryLinkTree
 
   def initialize
     @count = 0
-    @values = []
   end
 
   def insert(data)
@@ -25,6 +24,7 @@ class Node
     @data = data
     @level = 1
     @max_depth = 0
+    @values = []
   end
 
   def push(previous, node)
@@ -90,6 +90,10 @@ class Node
     node.data
   end
 
+  def child?(node)
+    false ? node.left.nil? && node.right.nil? : true
+  end
+
   def tree_depth(node)
     unless node.left.nil? && node.right.nil?
       tree_depth(node.left) unless node.left.nil?
@@ -98,6 +102,20 @@ class Node
     @max_depth = node.level unless node.level < @max_depth
     return @max_depth
   end
+
+  def traverse_sort(node)
+    if node.nil?
+      return @values
+    else
+      traverse_sort(node.left)
+      @values << node.data
+      traverse_sort(node.right)
+    end
+  end
+
+
+
+
 end
 
 # tree = BinaryLinkTree.new
