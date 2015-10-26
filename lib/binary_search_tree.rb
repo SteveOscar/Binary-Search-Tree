@@ -1,8 +1,24 @@
 require 'pry'
+class FileReader
+  def read
+    filename = ARGV[0]
+    File.read(filename)
+  end
+end
+
+class FileWriter
+  def output
+    filename = ARGV[1]
+    File.open(filename, "w")
+  end
+end
+
 class BinaryLinkTree
-  attr_reader :head, :count
+  attr_reader :head, :count, :reader, :writer
 
   def initialize
+    @reader = FileReader.new
+    @writer = FileWriter.new
     @count = 0
   end
 
@@ -15,6 +31,16 @@ class BinaryLinkTree
       node.push(head, node)
     end
   end
+
+  def import (data)
+    reader.read.split("\n") .each { |num| data.insert(num) }
+  end
+
+  def write_file(handle)
+    handle.write(@values)
+    puts "Just wrote a file to #{@handle} that is #{@values} chars long"
+  end
+
 end
 
 class Node
@@ -113,16 +139,14 @@ class Node
     end
   end
 
-
-
-
 end
 
-# tree = BinaryLinkTree.new
-# tree.insert(10)
-# tree.insert(7)
-# tree.insert(5)
-# tree.insert(5)
-# tree.insert(9)
-# binding.pry
-# tree.insert(5)
+if __FILE__ == $0
+  list = BinaryLinkTree.new
+  list.import(list)
+  root = list.head
+  puts root.traverse_sort(root)
+  puts "#{list.count} is the count"
+  handle = list.writer.output
+  list.write_file(handle)
+end

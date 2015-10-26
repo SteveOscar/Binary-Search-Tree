@@ -1,7 +1,7 @@
 require 'pry'
 require 'minitest'
 require 'minitest/autorun'
-require './binary_search_tree'
+require './lib/binary_search_tree'
 
 class BinaryLinkTreeTest < Minitest::Test
   attr_reader :list
