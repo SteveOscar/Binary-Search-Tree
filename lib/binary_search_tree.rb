@@ -31,10 +31,9 @@ class BinaryLinkTree
     end
   end
 
-  def import (data)
+  def import(data)
     reader.read.split("\n") .each { |num| data.insert(num.to_i) }
   end
-
 end
 
 class Node
@@ -54,28 +53,20 @@ class Node
       puts "Duplicate #{node.data} detected and discarded"
     else
       current = node
-      check_left(previous, current)
-      check_right(previous, current)
+      check_below(previous, current, previous.left, :>)
+      check_below(previous, current, previous.right, :<)
     end
   end
 
-  def check_left(previous, current)
-    return if previous.data < data
-    if previous.left.nil?
-      previous.left = current
-    else
-      target = previous.left
-      push(target, current)
-    end
-  end
-
-  def check_right(previous, current)
-    return if previous.data > data
-    if previous.right.nil?
-      previous.right = current
-    else
-      target = previous.right
-      push(target, current)
+  def check_below(previous, current, direction, operator)
+    if previous.data.send(operator, data)
+      if direction == nil
+        previous.left = current if operator == :>
+        previous.right = current if operator == :<
+      else
+        target = direction
+        push(target, current)
+      end
     end
   end
 

@@ -65,17 +65,17 @@ class BinaryLinkTreeTest < Minitest::Test
     assert list.head.left.left.right.data == 6
   end
 
-  def test_right_branch_method
+  def test_right_branch_check_below
     node = Node.new(7)
     previous = Node.new(3)
-    result = node.check_right(previous, node)
+    result = node.check_below(previous, node, previous.right, :<)
     assert previous.right == node
   end
 
-  def test_left_branch_method
+  def test_left_branch_check_below
     node = Node.new(3)
     previous = Node.new(7)
-    result = node.check_left(previous, node)
+    result = node.check_below(previous, node, previous.left, :>)
     assert previous.left == node
   end
 
