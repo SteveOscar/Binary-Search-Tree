@@ -205,7 +205,13 @@ class BinaryLinkTreeTest < Minitest::Test
     assert root.min(root) == 1
   end
 
-  def test_max_tree_depth
+  def test_max_tree_depth_shallow
+    list.insert(25)
+    root = list.head
+    assert root.tree_depth(root) == 1
+  end
+
+  def test_max_tree_depth_deep
     list.insert(25)
     list.insert(15)
     list.insert(31)

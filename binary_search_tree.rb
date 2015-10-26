@@ -19,11 +19,10 @@ class BinaryLinkTree
 end
 
 class Node
-  attr_accessor :data, :left, :right, :found, :level, :max, :min
+  attr_accessor :data, :left, :right, :level
 
-  def initialize(data, left = nil, right = nil)
+  def initialize(data)
     @data = data
-    @found = false
     @level = 1
     @max_depth = 0
   end
@@ -40,32 +39,31 @@ class Node
   end
 
   def check_left(previous, current)
-    if previous.data > data
-      if previous.left == nil
-        previous.left = current
-      else
-        target = previous.left
-        push(target, current)
-      end
+    return if previous.data < data
+    if previous.left.nil?
+      previous.left = current
+    else
+      target = previous.left
+      push(target, current)
     end
   end
 
   def check_right(previous, current)
-    if previous.data < data
-      if previous.right == nil
-        previous.right = current
-      else
-        target = previous.right
-        push(target, current)
-      end
+    return if previous.data > data
+    if previous.right.nil?
+      previous.right = current
+    else
+      target = previous.right
+      push(target, current)
     end
   end
 
   def include?(node, value)
     if node.data == value
-        @found = true
-        return @found
-      else
+      @found = true
+      return @found
+    else
+      @found = false
       include?(node.right, value) unless node.right.nil?
       include?(node.left, value) unless node.left.nil?
     end
@@ -74,8 +72,8 @@ class Node
 
   def depth_of(node, value)
     if node.data == value
-        @depth = node.level
-      else
+      @depth = node.level
+    else
       depth_of(node.right, value) unless node.right.nil?
       depth_of(node.left, value) unless node.left.nil?
     end
@@ -83,16 +81,12 @@ class Node
   end
 
   def max(node)
-    until node.right.nil?
-      node = node.right
-    end
+    node = node.right until node.right.nil?
     node.data
   end
 
   def min(node)
-    until node.left.nil?
-      node = node.left
-    end
+    node = node.left until node.left.nil?
     node.data
   end
 
