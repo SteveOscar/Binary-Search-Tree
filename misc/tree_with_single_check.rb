@@ -19,13 +19,12 @@ class BinaryLinkTree
 end
 
 class Node
-  attr_accessor :data, :left, :right, :found, :level, :max, :min
+  attr_accessor :data, :link, :left, :right, :found, :level, :max, :min
 
   def initialize(data, left = nil, right = nil)
     @data = data
     @found = false
     @level = 1
-    @max_depth = 0
   end
 
   def push(previous, node)
@@ -34,28 +33,18 @@ class Node
       puts "Duplicate #{node.data} detected and discarded"
     else
       current = node
-      check_left(previous, current)
-      check_right(previous, current)
+      check_below(previous, current, previous.left, :>)
+      check_below(previous, current, previous.right, :<)
     end
   end
 
-  def check_left(previous, current)
-    if previous.data > data
-      if previous.left == nil
-        previous.left = current
+  def check_below(previous, current, direction, operator)
+    if previous.data.send(operator, data)
+      if direction == nil
+        previous.left = current if operator == :>
+        previous.right = current if operator == :<
       else
-        target = previous.left
-        push(target, current)
-      end
-    end
-  end
-
-  def check_right(previous, current)
-    if previous.data < data
-      if previous.right == nil
-        previous.right = current
-      else
-        target = previous.right
+        target = direction
         push(target, current)
       end
     end
@@ -96,14 +85,6 @@ class Node
     node.data
   end
 
-  def tree_depth(node)
-    unless node.left.nil? && node.right.nil?
-      tree_depth(node.left) unless node.left.nil?
-      tree_depth(node.right) unless node.right.nil?
-    end
-    @max_depth = node.level unless node.level < @max_depth
-    return @max_depth
-  end
 end
 
 # tree = BinaryLinkTree.new
