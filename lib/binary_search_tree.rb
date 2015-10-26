@@ -49,8 +49,8 @@ class Node
 
   def push(previous, node)
     node.level += 1
-    if previous.data == node.data
-      puts "Duplicate #{node.data} detected and discarded"
+    if previous.data == node.data || previous.data == ''
+      puts "Invalid entry: #{node.data} was discarded"
     else
       current = node
       check_below(previous, current, previous.left, :>)

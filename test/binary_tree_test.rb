@@ -27,6 +27,13 @@ class BinaryLinkTreeTest < Minitest::Test
     assert_equal 4, list.count
   end
 
+  def test_blank_entries
+    list.insert('')
+    list.insert('')
+    list.insert('')
+    assert list.head.tree_depth(list.head) == 1
+  end
+
   def test_second_node_is_linked_to_head
     list.insert(10)
     list.insert(7)
@@ -38,6 +45,14 @@ class BinaryLinkTreeTest < Minitest::Test
     list.insert(7)
     list.insert(6)
     assert list.head.left.left.data == 6
+  end
+
+  def test_it_rejects_duplicates
+    list.insert(10)
+    list.insert(7)
+    list.insert(10)
+    list.insert(10)
+    assert list.head.tree_depth(list.head) == 2
   end
 
   def test_alternating_tree_pattern
@@ -233,6 +248,26 @@ class BinaryLinkTreeTest < Minitest::Test
     list.insert(8)
     root = list.head
     assert_equal [5, 8, 10, 13, 15], root.traverse_sort(root)
+  end
+
+  def test_traversal_sort_presorted
+    list.insert(1)
+    list.insert(2)
+    list.insert(3)
+    list.insert(4)
+    list.insert(5)
+    root = list.head
+    assert_equal [1, 2, 3, 4, 5], root.traverse_sort(root)
+  end
+
+  def test_traversal_sort_all_zeroes
+    list.insert(0)
+    list.insert(0)
+    list.insert(0)
+    list.insert(0)
+    list.insert(0)
+    root = list.head
+    assert_equal [0], root.traverse_sort(root)
   end
 
 end
