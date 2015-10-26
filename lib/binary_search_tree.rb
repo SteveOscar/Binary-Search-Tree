@@ -114,7 +114,7 @@ class Node
 
   def write_file(sorted)
     handle = writer.output
-    handle.write(sorted.join(', '))
+    handle.write(sorted)
     puts "Just wrote a file #{sorted.length} chars long"
   end
 end
@@ -124,5 +124,10 @@ if __FILE__ == $0
   list.import(list)
   root = list.head
   sorted = root.traverse_sort(root)
-  root.write_file(sorted)
+  text ="  The max number is #{root.max(root)} \n
+  The min number is #{root.min(root)} \n
+  The max height of the tree is #{root.tree_depth(root)} levels \n
+  The depth of 44 is level #{root.depth_of(root, 44)} \n
+  The sorted contents: #{sorted.join(', ')}"
+  root.write_file(text)
 end
